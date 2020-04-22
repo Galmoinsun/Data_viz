@@ -6,7 +6,7 @@ Deactivate the play button while playing. Deactivate the pause button while on p
 2	2	  InProgress
 Add the current year somewhere, close to the button or in one of the corners of the chart. This provides a feedback when we move the slider.
 
-3	3	  InProgress
+3	3	  Done
 The y-axis selector should have a "none" option ; when selected, countries agglutinate on a horizontal line at the center of the graph. (Nice with #10.)
 
 4	3	  ToDo

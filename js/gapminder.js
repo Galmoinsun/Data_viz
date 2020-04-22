@@ -26,8 +26,7 @@ let t_duration = 0,
   year_current = +slider.property("value"),
   year_max = +slider.property("max"),
   year_index = year_current - year_min,
-  start = false,
-  with_yaxis = true;
+  start = false;
 
 /* scale definition */
 
@@ -152,8 +151,7 @@ function draw_countries({ countries_svg, x, y, r, o }) {
     .select("circle")
     .transition(transition)
     .attr("cx", d => x(d.income[year_index]))
-    /*.attr("cy", d => y(d[which_var][year_index]))*/
-    .attr("cy", 200)
+    .attr("cy", d => (which_var === "none" ? 200 : y(d[which_var][year_index])))
     .attr("r", d => r(d.population[year_index]))
     .attr("stroke", d => o(d.region));
 
@@ -162,33 +160,16 @@ function draw_countries({ countries_svg, x, y, r, o }) {
   countries_svg
     .select("text")
     .transition(transition)
-    /*.attr(
-      "x",
-      d => x(d.income[year_index]) + r(d.population[year_index]) + spacing
-    )*/
-    /*.attr("y", d => y(d[which_var][year_index]) + 5)*/
-    .attr("x", d => x(d.income[year_index]) + r(d.population[year_index]))
-    .attr("y", 170)
+    .attr("x", d =>
+      which_var === "none"
+        ? x(d.income[year_index])
+        : x(d.income[year_index]) + r(d.population[year_index]) + spacing
+    )
+    .attr("y", d =>
+      which_var === "none" ? 175 : y(d[which_var][year_index]) + 5
+    )
     .text(d => d.name);
 
-  if (with_yaxis) {
-    countries_svg
-      .select("text")
-      .transition(transition)
-      .attr(
-        "x",
-        d => x(d.income[year_index]) + r(d.population[year_index]) + spacing
-      )
-      .attr("y", d => y(d[which_var][year_index]) + 5)
-      .text(d => d.name);
-    countries_svg
-      .select("circle")
-      .transition(transition)
-      .attr("cx", d => x(d.income[year_index]))
-      .attr("cy", d => y(d[which_var][year_index]))
-      .attr("r", d => r(d.population[year_index]))
-      .attr("stroke", d => o(d.region));
-  }
   t_duration = 250;
 
   return { countries_svg, x, y, r, o };
