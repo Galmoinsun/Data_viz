@@ -95,21 +95,3 @@
     <script type="text/javascript" src="js/gapminder.js"></script>
   </body>
 </html>
-
-<!-- 
-
-# pts
-1 2   Deactivate the play button while playing. Deactivate the pause button while on pause.
--> Fait
-2	2	  Add the current year somewhere, close to the button or in one of the corners of the chart. This provides a feedback when we move the slider.
--> en cours
-3	3	  The y-axis selector should have a "none" option ; when selected, countries agglutinate on a horizontal line at the center of the graph. (Nice with #10.)
-4	3	  Generalize the code, assuming that you don't know the time extent of the data.
-5	5	  The graph's width should resize anytime the user resizes its window.
-6	6	  If the labels fit, they should be inside the dot, otherwise it should be under.
-7	6	  In order to hint your users that they can interact with the dots, animate a dot randomly every 10 to 30 secs (like a gentle bouncing).
-8	7	  Make the range of the y axis adapt to the data, with transitions. Neither ends of the shown range should ever decrease. (It is acceptable to extend the range from 70 years to 80 years, but not to later move it back to 70 again.)
-9	12  A selected contry should have its trajectory over time visible as a line. You will not pay attention to missing data but you will make sure that the line stay behind the dots, not to mess our overall reading of the dots. You may want to use d3.line (for building lines) and d3.zip (to reshape the data).
-10 12	Prevent the countries from colliding into each other. You will use d3.force.
-11 13	The labels should be draggable : one should be able to drag them around the circle, at a constant radius. Once moved, they should stay at this position when the graph is animated. You'll have to use d3.drag.
--->
