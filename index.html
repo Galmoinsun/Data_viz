@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script type="text/javascript">
+      var somme = "ahah";
+    </script>
     <title>My Gapminder</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="css/gapminder.css" />
@@ -39,10 +42,17 @@
           <select id="y-axis-button" class="control-unit">
             <option value="life_expectancy">Life expectancy</option>
             <option value="co2_emissions">CO² Emissions</option>
+            <option value="none">None</option>
           </select>
           <br />
           <span class="control-label">Years</span>
-          <!--<span class="timer"> Year</span>-->
+          <!-- <span>
+            <script type="text/javascript" src="js/gapminder.js">
+              document.write(year_current);
+            </script>
+          </span>
+          -->
+
           <br />
           <span class="control-unit">
             <button id="play">▷</button>
@@ -87,11 +97,10 @@
       </p>
       <p>
         <strong>Data source:</strong>
-        <a href="https://www.gapminder.org/data">Gapminder</a
-        ><!-- Q1.10.-->
+        <a href="https://www.gapminder.org/data">Gapminder</a>
+        <!-- Q1.10.-->
       </p>
     </footer>
-
     <script type="text/javascript" src="js/gapminder.js"></script>
   </body>
 </html>
