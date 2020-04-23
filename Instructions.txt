@@ -9,7 +9,7 @@ Add the current year somewhere, close to the button or in one of the corners of 
 3	3	  Done
 The y-axis selector should have a "none" option ; when selected, countries agglutinate on a horizontal line at the center of the graph. (Nice with #10.)
 
-4	3	  ToDo
+4	3	  Done
 Generalize the code, assuming that you don't know the time extent of the data.
 
 5	5	  InProgress
