@@ -123,6 +123,9 @@ a:hover {
 .control-unit {
   float: left;
 }
+.year_current {
+  text-align: right; /*ca marche pas*/
+}
 button,
 select {
   font-size: 85%;

@@ -35,6 +35,7 @@
       </div>
       <div>
         <h2>Customize your graph</h2>
+
         <div id="controls">
           <span class="control-label">Y-axis</span>
           <br />
@@ -42,16 +43,18 @@
             <option value="life_expectancy">Life expectancy</option>
             <option value="co2_emissions">CO² Emissions</option>
             <option value="none">None</option>
+            <!-- added for Item 3 -->
           </select>
           <br />
           <span class="control-label">Years </span>
           <span id="year_current"></span>
+          <!-- added for Item 2 -->
           <br />
+
           <span class="control-unit">
             <button id="play">▷</button>
-            <button id="pause">||</button
-            ><!-- Q1.9.-->
-            <span id="year-min" class="year-label">1950</span>
+            <button id="pause">||</button>
+            <span id="year_min" class="year-label"></span>
             <input
               id="year"
               type="range"
@@ -60,7 +63,7 @@
               value="1950"
               step="1"
             />
-            <span id="year-max" class="year-label">2010</span>
+            <span id="year_max" class="year-label"></span>
           </span>
           <br />
           <button
@@ -91,7 +94,6 @@
       <p>
         <strong>Data source:</strong>
         <a href="https://www.gapminder.org/data">Gapminder</a>
-        <!-- Q1.10.-->
       </p>
     </footer>
     <script type="text/javascript" src="js/gapminder.js"></script>

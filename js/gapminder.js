@@ -26,7 +26,18 @@ let t_duration = 0,
   year_current = +slider.property("value"),
   year_max = +slider.property("max"),
   year_index = year_current - year_min,
-  start = false;
+  start = false; /* added for Item 1 */
+
+/* q4 trial */
+const recup_annees = function(countries_svg) {
+  let data = countries_svg.data();
+  let annee_max = d3.max(d3.max(data.map(d => d.year)));
+  let annee_min = d3.min(d3.min(data.map(d => d.year)));
+  return [annee_min, annee_max];
+  /*document.getElementById("year_max").textContent = annee_max;*/
+  // I'm working on it...
+};
+/*recup_annees*/
 
 /* scale definition */
 
@@ -150,7 +161,7 @@ function draw_countries({ countries_svg, x, y, r, o }) {
     .select("circle")
     .transition(transition)
     .attr("cx", d => x(d.income[year_index]))
-    .attr("cy", d => (which_var === "none" ? 200 : y(d[which_var][year_index])))
+    .attr("cy", d => (which_var === "none" ? 200 : y(d[which_var][year_index]))) //modified for Item 3
     .attr("r", d => r(d.population[year_index]))
     .attr("stroke", d => o(d.region));
 
@@ -163,12 +174,11 @@ function draw_countries({ countries_svg, x, y, r, o }) {
       which_var === "none"
         ? x(d.income[year_index])
         : x(d.income[year_index]) + r(d.population[year_index]) + spacing
-    )
+    ) //modified for Item 3
     .attr("y", d =>
       which_var === "none" ? 175 : y(d[which_var][year_index]) + 5
-    )
+    ) //modified for Item 3
     .text(d => d.name);
-  /*console.log(countries_svg.select("circle"));*/
   t_duration = 250;
 
   return { countries_svg, x, y, r, o };
@@ -192,9 +202,12 @@ function start_timer() {
     }
 
     t = d3.interval(increment, time_pace); // timer
-    start = true;
+    start = true; /* added for Item 1 */
   }
 }
+
+/* trial to make the reinitialize button work*/
+
 /*function reinitialize_timer() {
   
   year_current = year_min;
@@ -207,14 +220,14 @@ function start_timer() {
 function pause_timer() {
   if (start) {
     t.stop();
-    start = false;
+    start = false; /* added for Item 1 */
   }
 }
 
 function increment() {
   if (year_current === year_max) {
     t.stop();
-    start = false;
+    start = false; /* added for Item 1 */
   } else {
     year_current += 1;
     document.getElementById("year_current").textContent = year_current;
@@ -239,6 +252,10 @@ d3.json("data/countries.json").then(countries_json => {
   container.dispatch("data_ready", {
     detail: countries_svg
   });
+
+  let annees = recup_annees(countries_svg);
+  document.getElementById("year_max").textContent = annees[1];
+  document.getElementById("year_min").textContent = annees[0];
 });
 
 /* subscriptions */
