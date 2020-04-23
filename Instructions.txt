@@ -15,7 +15,7 @@ Generalize the code, assuming that you don't know the time extent of the data.
 5	5	  InProgress
 The graph's width should resize anytime the user resizes its window.
 
-6	6	  ToDo
+6	6	  Done
 If the labels fit, they should be inside the dot, otherwise it should be under.
 
 7	6	  InProgress

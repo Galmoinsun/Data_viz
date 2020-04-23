@@ -7,6 +7,7 @@ let section = d3.select("#content"),
   yaxis_button = d3.select("#y-axis-button"),
   play_button = d3.select("#play"),
   pause_button = d3.select("#pause"),
+  //reinitialize = d3.select("#reinitialize"),
   slider = d3.select("#year");
 
 /* display parameters */
@@ -28,16 +29,13 @@ let t_duration = 0,
   year_index = year_current - year_min,
   start = false; /* added for Item 1 */
 
-/* q4 trial */
+/* Item 4 : récupération de l'année min et max du fichier json*/
 const recup_annees = function(countries_svg) {
   let data = countries_svg.data();
   let annee_max = d3.max(d3.max(data.map(d => d.year)));
   let annee_min = d3.min(d3.min(data.map(d => d.year)));
   return [annee_min, annee_max];
-  /*document.getElementById("year_max").textContent = annee_max;*/
-  // I'm working on it...
 };
-/*recup_annees*/
 
 /* scale definition */
 
@@ -53,16 +51,6 @@ const compute_scales = function(countries_svg) {
             : d.life_expectancy /*[year_index]*/
       ) /*elements for Item 8 */
       .flat(),
-    yMin = d3.min(y_var),
-    /*y_var = data
-    .map(d =>
-      which_var === "co2_emissions"
-      ? d.co2_emissions
-      : which_var === "life_expectancy"
-      ? d.life_expectancy
-      : "none"
-    )
-    .flat(),*/
     yMax = d3.max(y_var),
     rMax = d3.max(data.map(d => d.population).flat());
   return {
@@ -153,15 +141,17 @@ function draw_xaxis({ countries_svg, x, y, r, o }) {
     .attr("dx", "10");
 }
 
-/*fonction qui renvoie la longueur d'un mot*/
+/* Item 6 : fonction qui renvoie la longueur d'un mot*/
 function len(mot) {
   let len = 0;
-  const letter_size = 2;
-  //let letter_size = ...
+  const letter_size = 2; /* Ici, ce n'est pas vraiment la taille d'une lettre
+  mais on a été obligé de la réduire pour faire en sorte que des noms de pays entrent
+  virtuellement dans les cercles et montrer que la fonctionnalité marche.*/
   len = mot.length * letter_size;
   return len;
 }
-console.log(len("brigitte") / 2);
+//console.log(len("brigitte") / 2);
+
 function draw_countries({ countries_svg, x, y, r, o }) {
   let transition = d3.transition().duration(t_duration);
 
@@ -220,13 +210,14 @@ function start_timer() {
 /* trial to make the reinitialize button work*/
 
 /*function reinitialize_timer() {
-  
   year_current = year_min;
   year_index = 0;
   slider.property("value", year_min);
 
   t = d3.interval(increment, time_pace); // timer
-}*/
+  start = false;
+}
+reinitialize.on("click", reinitialize_timer());*/
 
 function pause_timer() {
   if (start) {
@@ -270,6 +261,27 @@ d3.json("data/countries.json").then(countries_json => {
   slider.property("max", annees[1]);
   slider.property("min", annees[0]);
 });
+
+/*Trials for the item 9
+
+import { line } from "d3";
+
+function lineb({ countries_svg, x, y }) {
+  let line = d3.line();
+  let zip = d3.zip();
+
+  countries_svg
+    .line(zip(income,population))
+    .x(d => x(d.income))
+    .y(d => y(d.population));
+}*/
+
+/* Line that follows the path of a country
+d3.select(countries_json)
+  .append("path")
+  .attr("d", line(countries_json))
+  .attr("stroke", "black")
+*/
 
 /* subscriptions */
 
@@ -316,7 +328,9 @@ function set_up_listeners({ countries_svg, x, y, r, o }) {
   });
 }
 
-/* 
+/* A décommenter pour tester l'animation
+
+console.log(countries_svg.selectAll("circle").attr('cy'));
 const countries = document.querySelector("#content");
 countries.style.position = "absolute";
 let ymax = 400,
@@ -324,7 +338,9 @@ let ymax = 400,
 
 requestAnimationFrame(function() {
   bounce(countries, ymin, ymax, 4, 8);
-});*/
+});
+
+*/
 
 /*une fonction pour faire rebondir n fois un objet "element" entre "ymin" et "ymax"*/
 function bounce(
@@ -356,7 +372,7 @@ function bounce(
   }
 }
 
-/*slider.property("max", year_max);*/
-console.log(slider.property("max"));
-console.log(year_max);
 document.getElementById("year_current").textContent = year_current;
+
+/*Trial for q5*/
+//graph.attr("viewBox", "0 0" + width + " " + height);
