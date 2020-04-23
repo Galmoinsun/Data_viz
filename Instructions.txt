@@ -3,7 +3,7 @@
 1 2   Done  
 Deactivate the play button while playing. Deactivate the pause button while on pause.
 
-2	2	  InProgress
+2	2	  Done
 Add the current year somewhere, close to the button or in one of the corners of the chart. This provides a feedback when we move the slider.
 
 3	3	  Done
@@ -12,16 +12,16 @@ The y-axis selector should have a "none" option ; when selected, countries agglu
 4	3	  ToDo
 Generalize the code, assuming that you don't know the time extent of the data.
 
-5	5	  ToDo
+5	5	  InProgress
 The graph's width should resize anytime the user resizes its window.
 
 6	6	  ToDo
 If the labels fit, they should be inside the dot, otherwise it should be under.
 
-7	6	  ToDo
+7	6	  InProgress
 In order to hint your users that they can interact with the dots, animate a dot randomly every 10 to 30 secs (like a gentle bouncing).
 
-8	7	  ToDo
+8	7	  InProgress
 Make the range of the y axis adapt to the data, with transitions. Neither ends of the shown range should ever decrease. (It is acceptable to extend the range from 70 years to 80 years, but not to later move it back to 70 again.)
 
 9	12  ToDo 

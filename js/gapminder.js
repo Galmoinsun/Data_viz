@@ -32,14 +32,16 @@ let t_duration = 0,
 
 const compute_scales = function(countries_svg) {
   let data = countries_svg.data();
-
   let xMax = d3.max(data.map(d => d.income).flat()),
     xMin = d3.min(data.map(d => d.income).flat()),
     y_var = data
       .map(d =>
-        which_var === "co2_emissions" ? d.co2_emissions : d.life_expectancy
+        which_var === "co2_emissions"
+          ? d.co2_emissions[year_index]
+          : d.life_expectancy[year_index]
       )
       .flat(),
+    yMin = d3.min(y_var),
     /*y_var = data
     .map(d =>
       which_var === "co2_emissions"
@@ -52,7 +54,6 @@ const compute_scales = function(countries_svg) {
     yMax = d3.max(y_var),
     /*yCenter = yMax/2*/
     rMax = d3.max(data.map(d => d.population).flat());
-
   return {
     countries_svg: countries_svg,
     x: d3
@@ -101,7 +102,6 @@ function draw_yaxis({ countries_svg, x, y, r, o }) {
       ? "Life Expectancy (years)"
       : "Unknokwn variable :("
   );
-
   y_axis.call(d3.axisLeft().scale(y));
 }
 
@@ -169,7 +169,7 @@ function draw_countries({ countries_svg, x, y, r, o }) {
       which_var === "none" ? 175 : y(d[which_var][year_index]) + 5
     )
     .text(d => d.name);
-
+  /*console.log(countries_svg.select("circle"));*/
   t_duration = 250;
 
   return { countries_svg, x, y, r, o };
@@ -187,6 +187,7 @@ function start_timer() {
     if (year_current === year_max) {
       // remise à zéro
       year_current = year_min;
+      document.getElementById("aha").textContent = year_current;
       year_index = 0;
       slider.property("value", year_min);
     }
@@ -217,6 +218,7 @@ function increment() {
     start = false;
   } else {
     year_current += 1;
+    document.getElementById("aha").textContent = year_current;
     year_index = year_current - year_min;
 
     slider.property("value", year_current);
@@ -268,6 +270,7 @@ function set_up_listeners({ countries_svg, x, y, r, o }) {
 
   slider.on("input", function() {
     year_current = +slider.property("value");
+    document.getElementById("aha").textContent = year_current;
     year_index = year_current - year_min;
     draw_countries({ countries_svg, x, y, r, o });
   });
@@ -280,3 +283,45 @@ function set_up_listeners({ countries_svg, x, y, r, o }) {
     draw_yaxis(params);
   });
 }
+
+/* 
+const countries = document.querySelector("#content");
+countries.style.position = "absolute";
+let ymax = 400,
+  ymin = 500;
+
+requestAnimationFrame(function() {
+  bounce(countries, ymin, ymax, 4, 8);
+});*/
+
+/*une fonction pour faire rebondir n fois un objet "element" entre "ymin" et "ymax"*/
+function bounce(
+  element,
+  ymin,
+  ymax,
+  nb_bounce = 3,
+  vitesse = 4,
+  i = ymin - 1,
+  up = true
+) {
+  if (nb_bounce < 0) {
+    return 0;
+  }
+  if (i < ymin && i > ymax) {
+    i = up ? i - vitesse : i + vitesse;
+    element.style.top = `${i}px`;
+    requestAnimationFrame(function() {
+      bounce(element, ymin, ymax, nb_bounce, vitesse, i, up);
+    });
+  } else {
+    up = !up;
+    nb_bounce--;
+    i = up ? i - vitesse : i + vitesse;
+    element.style.top = `${i}px`;
+    requestAnimationFrame(function() {
+      bounce(element, ymin, ymax, nb_bounce, vitesse, i, up);
+    });
+  }
+}
+
+document.getElementById("aha").textContent = year_current;
