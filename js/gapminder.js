@@ -46,11 +46,12 @@ const compute_scales = function(countries_svg) {
   let xMax = d3.max(data.map(d => d.income).flat()),
     xMin = d3.min(data.map(d => d.income).flat()),
     y_var = data
-      .map(d =>
-        which_var === "co2_emissions"
-          ? d.co2_emissions[year_index]
-          : d.life_expectancy[year_index]
-      )
+      .map(
+        d =>
+          which_var === "co2_emissions"
+            ? d.co2_emissions /*[year_index]*/
+            : d.life_expectancy /*[year_index]*/
+      ) /*elements for Item 8 */
       .flat(),
     yMin = d3.min(y_var),
     /*y_var = data
@@ -152,6 +153,15 @@ function draw_xaxis({ countries_svg, x, y, r, o }) {
     .attr("dx", "10");
 }
 
+/*fonction qui renvoie la longueur d'un mot*/
+function len(mot) {
+  let len = 0;
+  const letter_size = 2;
+  //let letter_size = ...
+  len = mot.length * letter_size;
+  return len;
+}
+console.log(len("brigitte") / 2);
 function draw_countries({ countries_svg, x, y, r, o }) {
   let transition = d3.transition().duration(t_duration);
 
@@ -171,14 +181,15 @@ function draw_countries({ countries_svg, x, y, r, o }) {
     .select("text")
     .transition(transition)
     .attr("x", d =>
-      which_var === "none"
-        ? x(d.income[year_index])
+      which_var === "none" || r(d.population[year_index]) * 2 > len(d.name)
+        ? x(d.income[year_index] - len(d.name))
         : x(d.income[year_index]) + r(d.population[year_index]) + spacing
-    ) //modified for Item 3
+    ) //modified for Item 3 & Item 6
     .attr("y", d =>
       which_var === "none" ? 175 : y(d[which_var][year_index]) + 5
     ) //modified for Item 3
     .text(d => d.name);
+
   t_duration = 250;
 
   return { countries_svg, x, y, r, o };
@@ -256,6 +267,8 @@ d3.json("data/countries.json").then(countries_json => {
   let annees = recup_annees(countries_svg);
   document.getElementById("year_max").textContent = annees[1];
   document.getElementById("year_min").textContent = annees[0];
+  slider.property("max", annees[1]);
+  slider.property("min", annees[0]);
 });
 
 /* subscriptions */
@@ -289,6 +302,9 @@ function set_up_listeners({ countries_svg, x, y, r, o }) {
     document.getElementById("year_current").textContent = year_current;
     year_index = year_current - year_min;
     draw_countries({ countries_svg, x, y, r, o });
+    // elements for Item 8 :
+    /*let params = compute_scales(countries_svg);
+    draw_yaxis(params);*/
   });
 
   yaxis_button.on("change", function() {
@@ -340,4 +356,7 @@ function bounce(
   }
 }
 
+/*slider.property("max", year_max);*/
+console.log(slider.property("max"));
+console.log(year_max);
 document.getElementById("year_current").textContent = year_current;
