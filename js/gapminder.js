@@ -52,7 +52,6 @@ const compute_scales = function(countries_svg) {
     )
     .flat(),*/
     yMax = d3.max(y_var),
-    /*yCenter = yMax/2*/
     rMax = d3.max(data.map(d => d.population).flat());
   return {
     countries_svg: countries_svg,
@@ -187,7 +186,7 @@ function start_timer() {
     if (year_current === year_max) {
       // remise à zéro
       year_current = year_min;
-      document.getElementById("aha").textContent = year_current;
+      document.getElementById("year_current").textContent = year_current;
       year_index = 0;
       slider.property("value", year_min);
     }
@@ -218,7 +217,7 @@ function increment() {
     start = false;
   } else {
     year_current += 1;
-    document.getElementById("aha").textContent = year_current;
+    document.getElementById("year_current").textContent = year_current;
     year_index = year_current - year_min;
 
     slider.property("value", year_current);
@@ -270,7 +269,7 @@ function set_up_listeners({ countries_svg, x, y, r, o }) {
 
   slider.on("input", function() {
     year_current = +slider.property("value");
-    document.getElementById("aha").textContent = year_current;
+    document.getElementById("year_current").textContent = year_current;
     year_index = year_current - year_min;
     draw_countries({ countries_svg, x, y, r, o });
   });
@@ -324,4 +323,4 @@ function bounce(
   }
 }
 
-document.getElementById("aha").textContent = year_current;
+document.getElementById("year_current").textContent = year_current;
